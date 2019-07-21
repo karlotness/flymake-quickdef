@@ -131,12 +131,13 @@ See info node `(flymake)An annotated example backend'."
                                                      ;; Save match data to work around a bug in `flymake-diag-region'
                                                      ;; That function seems to alter match data and is commonly called here
                                                      (save-match-data
-                                                       (let ((d (apply 'flymake-make-diagnostic
-                                                                       ,(plist-get def-plist :prep-diagnostic))))
-                                                         ;; Skip any diagnostics with a type of nil
-                                                         ;; This makes it easier to filter some out
-                                                         (when (flymake-diagnostic-type d)
-                                                           (push d diags)))))
+                                                       (save-excursion
+                                                         (let ((d (apply 'flymake-make-diagnostic
+                                                                         ,(plist-get def-plist :prep-diagnostic))))
+                                                           ;; Skip any diagnostics with a type of nil
+                                                           ;; This makes it easier to filter some out
+                                                           (when (flymake-diagnostic-type d)
+                                                             (push d diags))))))
                                                    (funcall report-fn (nreverse diags)))))))
                                        ;; Else case: this process is obsolete
                                        (flymake-log :warning "Canceling obsolete check %s" proc))
