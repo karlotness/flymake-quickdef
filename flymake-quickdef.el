@@ -1,4 +1,4 @@
-;;; flymake-quickdef.el --- Macros and functions for quickly defining Flymake backends  -*- lexical-binding: t; -*-
+;;; flymake-quickdef.el --- Quickly define a new Flymake backend  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2019 Karl Otness
 
