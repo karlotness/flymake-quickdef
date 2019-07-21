@@ -39,7 +39,6 @@
 ;; `flymake-make-diagnostic'.
 
 ;;; Code:
-
 
 ;; Flymake backend definition macro and support
 
