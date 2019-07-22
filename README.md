@@ -7,7 +7,7 @@ backend functions. The macro defines a function that is suitable to
 register with Flymake and is similar in implementation to the
 [example][example] in the Flymake manual.
 
-New backend functions using the macro provide:
+New backend functions using the macro provide, minimally:
 
 1. A Lisp form producing command line arguments for a program
 2. A regular expression to search the process output
