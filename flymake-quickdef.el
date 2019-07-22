@@ -137,7 +137,7 @@ See info node `(flymake)An annotated example backend'."
                                                (save-match-data
                                                  (let ((diags nil))
                                                    (while (search-forward-regexp
-                                                           ,(plist-get def-plist :search-regexp)
+                                                           ,(eval (plist-get def-plist :search-regexp))
                                                            nil t)
                                                      ;; Save match data to work around a bug in `flymake-diag-region'
                                                      ;; That function seems to alter match data and is commonly called here
