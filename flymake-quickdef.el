@@ -143,7 +143,7 @@ the function `flymake-diag-region' and the fmqd-source variable
 described above."
   (declare (indent defun) (doc-string 2))
   (unless lexical-binding
-    (error "flymake-quickdef-backend requires lexical-binding to be enabled (%s)" name))
+    (error "Need lexical-binding for flymake-quickdef-backend (%s)" name))
   (let* ((def-docstring (when (stringp docstring) docstring))
          (def-plist (if (stringp docstring) defs (cons docstring defs)))
          (write-type (or (eval (plist-get def-plist :write-type)) 'pipe))
