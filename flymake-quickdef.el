@@ -50,7 +50,7 @@ keyed by the symbol name of the appropriate backend function and
 values are running processes.")
 
 ;;;###autoload
-(defmacro flymake-quickdef-backend (name &optional docstring &rest plist)
+(defmacro flymake-quickdef-backend (name &optional docstring &rest defs)
   "Quickly define a backend for use with Flymake.
 This macro produces a new function, NAME, which is suitable to
 insert into `flymake-diagnostic-functions'. The function will
@@ -74,7 +74,7 @@ The implementation of this macro is derived from Flymake manual.
 See info node `(flymake)An annotated example backend'."
   (declare (indent defun) (doc-string 2))
   (let* ((def-docstring (when (stringp docstring) docstring))
-         (def-plist (if (stringp docstring) plist (cons docstring plist)))
+         (def-plist (if (stringp docstring) defs (cons docstring defs)))
          (write-type (or (eval (plist-get def-plist :write-type)) 'pipe))
          (temp-dir-symb (make-symbol "fmqd-temp-dir"))
          (fmqd-err-symb (make-symbol "fmqd-err"))
