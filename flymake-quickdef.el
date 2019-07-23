@@ -144,6 +144,8 @@ described above. Diagnostics with a type of nil are filtered out
 and not returned to Flymake. This makes it easier to ignore some
 regexp matches."
   (declare (indent defun) (doc-string 2))
+  ;; Do some initial sanity checks on the provided arguments
+  ;; Ex: If there isn't a docstring, join the first argument into def-plist
   (unless lexical-binding
     (error "Need lexical-binding for flymake-quickdef-backend (%s)" name))
   (let* ((def-docstring (when (stringp docstring) docstring))
@@ -158,6 +160,7 @@ regexp matches."
         (error "Missing flymake backend definition `%s'" elem)))
     (unless (memq write-type '(file pipe nil))
       (error "Invalid `:write-type' value `%s'" (plist-get def-plist :write-type)))
+    ;; Start of actual generated function definition
     `(defun ,name (report-fn &rest _args)
        ,def-docstring
        (let* ((fmqd-source (current-buffer))
@@ -185,6 +188,7 @@ regexp matches."
            ;; If writing to a file, send the data to the temp file
            ,@(when (eq write-type 'file)
                '((write-region nil nil fmqd-temp-file nil 'silent)))
+           ;; Launch the new external process
            (setq flymake-quickdef--procs
                  (plist-put flymake-quickdef--procs ',name
                             (make-process
@@ -199,7 +203,7 @@ regexp matches."
                                (unless (process-live-p proc)
                                  (unwind-protect
                                      (if (eq proc (plist-get (buffer-local-value 'flymake-quickdef--procs fmqd-source) ',name))
-                                         ;; This is the current process
+                                         ;; If case: this is the current process
                                          ;; Widen the code buffer so we can compute line numbers, etc.
                                          (with-current-buffer fmqd-source
                                            (save-restriction
