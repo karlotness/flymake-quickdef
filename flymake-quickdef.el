@@ -140,7 +140,9 @@ list of arguments suitable for the function
 `flymake-make-diagnostic'. This form should process the matches
 from :search-regexp to produce these values and will likely use
 the function `flymake-diag-region' and the fmqd-source variable
-described above."
+described above. Diagnostics with a type of nil are filtered out
+and not returned to Flymake. This makes it easier to ignore some
+regexp matches."
   (declare (indent defun) (doc-string 2))
   (unless lexical-binding
     (error "Need lexical-binding for flymake-quickdef-backend (%s)" name))
