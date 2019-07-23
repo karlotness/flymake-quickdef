@@ -154,7 +154,7 @@ described above."
     (dolist (elem '(:proc-form :search-regexp :prep-diagnostic))
       (unless (plist-get def-plist elem)
         (error "Missing flymake backend definition `%s'" elem)))
-    (unless (memq (eval (plist-get def-plist :write-type)) '(file pipe nil))
+    (unless (memq write-type '(file pipe nil))
       (error "Invalid `:write-type' value `%s'" (plist-get def-plist :write-type)))
     `(defun ,name (report-fn &rest _args)
        ,def-docstring
@@ -208,7 +208,7 @@ described above."
                                                (save-match-data
                                                  (let ((diags nil))
                                                    (while (search-forward-regexp
-                                                           ,(eval (plist-get def-plist :search-regexp))
+                                                           ,(plist-get def-plist :search-regexp)
                                                            nil t)
                                                      ;; Save match data to work around a bug in `flymake-diag-region'
                                                      ;; That function seems to alter match data and is commonly called here
