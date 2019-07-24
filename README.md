@@ -19,10 +19,11 @@ similarly to [Flycheck's macro][fly-checker]. This makes it easier to
 define Flymake diagnostics using external linters and other programs.
 
 ## Usage
-A basic diagnostic function to check Python source code using
-[Bandit][bandit] can be produced using the macro. The generated
-backend function handles inserting the current buffer's contents into
-a temporary file and running the external process.
+Below is an example Flymake backend produced using the macro. It uses
+[Bandit][bandit] to check Python source code and shows an example of
+using a tool which requires a temporary file. The macro handles
+creating the temporary file to reflect the (possibly unsaved) state of
+the buffer, running the external process, and cleaning up.
 
 ```elisp
 (flymake-quickdef-backend flymake-check-bandit
