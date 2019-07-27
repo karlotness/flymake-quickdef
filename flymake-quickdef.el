@@ -220,7 +220,7 @@ regexp matches."
                                                      ;; That function seems to alter match data and is commonly called here
                                                      (save-match-data
                                                        (save-excursion
-                                                         (let ((d (apply 'flymake-make-diagnostic
+                                                         (let ((d (apply #'flymake-make-diagnostic
                                                                          ,(plist-get def-plist :prep-diagnostic))))
                                                            ;; Skip any diagnostics with a type of nil
                                                            ;; This makes it easier to filter some out
