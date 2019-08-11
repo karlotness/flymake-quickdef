@@ -1,4 +1,7 @@
 # Flymake-Quickdef
+[![MELPA](https://melpa.org/packages/flymake-quickdef-badge.svg)](https://melpa.org/#/flymake-quickdef)
+[![MELPA Stable](https://stable.melpa.org/packages/flymake-quickdef-badge.svg)](https://stable.melpa.org/#/flymake-quickdef)
+
 Quickly define a new [Flymake][flymake] backend
 
 This package mainly defines `flymake-quickdef-backend`, a macro which
