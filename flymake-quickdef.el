@@ -226,12 +226,23 @@ downstream errors inside Flymake."
                                                      ;; That function seems to alter match data and is commonly called here
                                                      (save-match-data
                                                        (save-excursion
-                                                         (let ((d (apply #'flymake-make-diagnostic
-                                                                         ,(plist-get def-plist :prep-diagnostic))))
-                                                           ;; Skip any diagnostics with a type of nil
-                                                           ;; This makes it easier to filter some out
-                                                           (when (flymake-diagnostic-type d)
-                                                             (push d diags))))))
+                                                         (let* ((diag-vals ,(plist-get def-plist :prep-diagnostic))
+                                                                (diag-beg (nth 1 diag-vals))
+                                                                (diag-end (nth 2 diag-vals))
+                                                                (diag-type (nth 3 diag-vals)))
+                                                           ;; Remove diagnostics with invalid values
+                                                           ;; for either beg or end. This guards against
+                                                           ;; overlay errors inside Flymake. Log such
+                                                           ;; errors with Flymake.
+                                                           (if (and (integer-or-marker-p diag-beg)
+                                                                    (integer-or-marker-p diag-end))
+                                                               ;; Skip any diagnostics with a type of nil
+                                                               ;; This makes it easier to filter some out
+                                                               (when diag-type
+                                                                 (push (apply #'flymake-make-diagnostic diag-vals) diags))
+                                                             (with-current-buffer fmqd-source
+                                                               (flymake-log :error "Got invalid buffer position %s or %s in %s"
+                                                                            diag-beg diag-end proc)))))))
                                                    (funcall report-fn (nreverse diags)))))))
                                        ;; Else case: this process is obsolete
                                        (flymake-log :warning "Canceling obsolete check %s" proc))
