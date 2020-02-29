@@ -1,6 +1,6 @@
 ;;; flymake-quickdef.el --- Quickly define a new Flymake backend  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019 Karl Otness
+;; Copyright (C) 2020 Karl Otness
 
 ;; Author: Karl Otness
 ;; Version: 1.0.0
