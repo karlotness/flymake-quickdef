@@ -82,7 +82,7 @@ Further details on the values for these entries are given below.
 Available Variables
 
 The macro also makes available a few variables which can be used
-user-provided Lisp forms: fmqd-source and fmqd-temp-file.
+in user-provided Lisp forms: fmqd-source and fmqd-temp-file.
 
 The variable fmqd-source stores a reference to the buffer
 containing the text being provided to the external program.  This
