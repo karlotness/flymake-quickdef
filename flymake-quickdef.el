@@ -142,7 +142,13 @@ from :search-regexp to produce these values and will likely use
 the function `flymake-diag-region' and the fmqd-source variable
 described above.  Diagnostics with a type of nil are filtered out
 and not returned to Flymake.  This makes it easier to ignore some
-regexp matches."
+regexp matches.
+
+When calling the function `flymake-diag-region', keep in mind
+that Emacs columns count from zero while external programs may
+count them from one. This can lead to nil values for the region
+producing diagnostics which will also be filtered out to avoid
+downstream errors inside Flymake."
   (declare (indent defun) (doc-string 2))
   ;; Do some initial sanity checks on the provided arguments
   ;; Ex: If there isn't a docstring, join the first argument into def-plist
