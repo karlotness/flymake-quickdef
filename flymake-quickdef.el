@@ -146,7 +146,7 @@ regexp matches.
 
 When calling the function `flymake-diag-region', keep in mind
 that Emacs columns count from zero while external programs may
-count them from one. This can lead to nil values for the region
+count them from one.  This can lead to nil values for the region
 producing diagnostics which will also be filtered out to avoid
 downstream errors inside Flymake."
   (declare (indent defun) (doc-string 2))
