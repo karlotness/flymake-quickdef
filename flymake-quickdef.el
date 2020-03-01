@@ -159,6 +159,7 @@ downstream errors inside Flymake."
          (write-type (or (eval (plist-get def-plist :write-type)) 'pipe))
          (temp-dir-symb (make-symbol "fmqd-temp-dir"))
          (fmqd-err-symb (make-symbol "fmqd-err"))
+         (diags-symb (make-symbol "diags"))
          (cleanup-form (when (eq write-type 'file)
                          (list (list 'delete-directory temp-dir-symb t)))))
     (dolist (elem '(:proc-form :search-regexp :prep-diagnostic))
@@ -218,7 +219,7 @@ downstream errors inside Flymake."
                                              (with-current-buffer (process-buffer proc)
                                                (goto-char (point-min))
                                                (save-match-data
-                                                 (let ((diags nil))
+                                                 (let ((,diags-symb nil))
                                                    (while (search-forward-regexp
                                                            ,(plist-get def-plist :search-regexp)
                                                            nil t)
@@ -239,11 +240,11 @@ downstream errors inside Flymake."
                                                                ;; Skip any diagnostics with a type of nil
                                                                ;; This makes it easier to filter some out
                                                                (when diag-type
-                                                                 (push (apply #'flymake-make-diagnostic diag-vals) diags))
+                                                                 (push (apply #'flymake-make-diagnostic diag-vals) ,diags-symb))
                                                              (with-current-buffer fmqd-source
                                                                (flymake-log :error "Got invalid buffer position %s or %s in %s"
                                                                             diag-beg diag-end proc)))))))
-                                                   (funcall report-fn (nreverse diags)))))))
+                                                   (funcall report-fn (nreverse ,diags-symb)))))))
                                        ;; Else case: this process is obsolete
                                        (flymake-log :warning "Canceling obsolete check %s" proc))
                                    ;; Unwind-protect cleanup forms
