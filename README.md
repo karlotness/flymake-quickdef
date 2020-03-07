@@ -29,6 +29,8 @@ creating the temporary file to reflect the (possibly unsaved) state of
 the buffer, running the external process, and cleaning up.
 
 ```elisp
+(require 'flymake-quickdef)
+
 (flymake-quickdef-backend flymake-check-bandit
   :pre-let ((bandit-exec (executable-find "bandit")))
   :pre-check (unless bandit-exec (error "Cannot find bandit executable"))
@@ -53,6 +55,12 @@ the buffer, running the external process, and cleaning up.
 
 Once the backend is defined, just arrange for it to be added to
 `flymake-diagnostic-functions`, for example in a mode hook.
+
+Note: if you use `flymake-quickdef-backend` in a package, always
+unconditionally `(require 'flymake-quickdef)`, like in the example
+(*not* just at compile time). This will ensure that supporting
+definitions, like global variables, are made when the backend
+functions run.
 
 ## License
 This program is free software: you can redistribute it and/or modify
