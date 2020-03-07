@@ -52,7 +52,6 @@ handles to running processes for Flymake backends.  Entries are
 keyed by the symbol name of the appropriate backend function and
 values are running processes.")
 
-;;;###autoload
 (defmacro flymake-quickdef-backend (name &optional docstring &rest defs)
   "Quickly define a backend for use with Flymake.
 This macro produces a new function, NAME, which is suitable for
